@@ -11,27 +11,3 @@ build/
 
 # Extra (custom) settings
 extra-settings.gradle
-build.gradle
-example/.gitignore
-example/build.gradle
-example/gradle.properties
-example/libs/
-example/proguard-rules.pro
-example/setting.gradle
-example/src/
-gen/
-gradle/
-gradlew
-gradlew.bat
-library/.gitignore
-library/build.gradle
-library/gradle.properties
-library/libs/
-library/proguard-rules.pro
-library/src/androidTest/
-library/src/main/AndroidManifest.xml
-library/src/main/java/com/mesoor/
-library/src/main/res/
-library/src/test/
-library/zhaohu-sdk-android.zip
-settings.gradle
