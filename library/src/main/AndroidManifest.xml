@@ -1,2 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.mesoor.zhaohu.sdk"/>
+          package="com.mesoor.zhaohu.sdk">
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <application>
+        <activity android:name=".WebviewActivity">
+        </activity>
+    </application>
+
+</manifest>

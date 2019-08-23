@@ -1,6 +1,9 @@
 package com.mesoor.zhaohu.sdk;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.ContextWrapper;
+import android.content.Intent;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -9,6 +12,7 @@ import android.view.animation.DecelerateInterpolator;
 import androidx.annotation.NonNull;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 public class DraggableFloatingActionButton extends FloatingActionButton {
     private final static float CLICK_DRAG_TOLERANCE = 10; // Often, there will be a slight, unintentional, drag when the user taps the FAB, so we need to account for this.
@@ -16,6 +20,7 @@ public class DraggableFloatingActionButton extends FloatingActionButton {
     private float downRawX, downRawY;
     private float dX, dY;
     private String token;
+    private Activity activity;
 
     private CoordinatorLayout.LayoutParams coordinatorLayout;
 
@@ -34,12 +39,16 @@ public class DraggableFloatingActionButton extends FloatingActionButton {
         setup();
     }
 
-    public void initialize(@NonNull String token) {
-
+    public void initialize(@NonNull Activity activity, @NonNull String token) {
+        this.activity = activity;
+        this.token = token;
     }
+
+    public static final String TOKEN = "com.mesoor.zhaohu.sdk.TOKEN";
 
     private void setup() {
         setOnTouchListener(this::onTouch);
+        setOnClickListener(this::onClick);
     }
 
     public CoordinatorLayout.LayoutParams getCoordinatorLayout() {
@@ -153,6 +162,17 @@ public class DraggableFloatingActionButton extends FloatingActionButton {
             // A drag consumed
             default:
                 return super.onTouchEvent(motionEvent);
+        }
+    }
+
+    private void onClick(View view) {
+        if (this.activity != null && this.token != null) {
+            Intent webview = new Intent(this.activity, WebviewActivity.class);
+            webview.putExtra(TOKEN, this.token);
+            this.activity.startActivity(webview);
+        } else {
+            Snackbar.make(view, "Please call the initialize method before using it.", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
         }
     }
 }
