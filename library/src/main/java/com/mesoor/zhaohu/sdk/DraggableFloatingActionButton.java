@@ -2,7 +2,6 @@ package com.mesoor.zhaohu.sdk;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.Intent;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -15,13 +14,12 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 public class DraggableFloatingActionButton extends FloatingActionButton {
+    public static final String TOKEN = "com.mesoor.zhaohu.sdk.TOKEN";
     private final static float CLICK_DRAG_TOLERANCE = 10; // Often, there will be a slight, unintentional, drag when the user taps the FAB, so we need to account for this.
-
     private float downRawX, downRawY;
     private float dX, dY;
     private String token;
     private Activity activity;
-
     private CoordinatorLayout.LayoutParams coordinatorLayout;
 
     public DraggableFloatingActionButton(Context context) {
@@ -43,8 +41,6 @@ public class DraggableFloatingActionButton extends FloatingActionButton {
         this.activity = activity;
         this.token = token;
     }
-
-    public static final String TOKEN = "com.mesoor.zhaohu.sdk.TOKEN";
 
     private void setup() {
         setOnTouchListener(this::onTouch);
