@@ -16,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
 
         DraggableFloatingActionButton zhaohu = findViewById(R.id.zhaohu);
         zhaohu.initialize(this, "???");
+        zhaohu.setRequestUserInfoListener(() -> "Fake User Info");
     }
 
 }
