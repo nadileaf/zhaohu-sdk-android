@@ -21,12 +21,12 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         DraggableFloatingActionButton zhaohu = findViewById(R.id.zhaohu);
-        zhaohu.setEnabled(false);
+        zhaohu.hide();
 
         schedulerExecutor.schedule(() -> {
             String token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c";
             zhaohu.initialize(this, token, () -> fakeUserInfo);
-            zhaohu.setEnabled(true);
+            zhaohu.show();
         }, 3, TimeUnit.SECONDS);
     }
 
