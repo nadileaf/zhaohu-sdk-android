@@ -44,9 +44,12 @@ public class DraggableFloatingActionButton extends FloatingActionButton {
         setup();
     }
 
-    public void initialize(@NonNull Activity activity, @NonNull String token) {
+    public void initialize(@NonNull Activity activity,
+                           @NonNull String token,
+                           @NonNull RequestUserInfoListener listener) {
         this.activity = activity;
         this.token = token;
+        this.requestUserInfoListener = listener;
     }
 
     private void setup() {
@@ -209,10 +212,6 @@ public class DraggableFloatingActionButton extends FloatingActionButton {
     }
 
     private RequestUserInfoListener requestUserInfoListener;
-
-    public void setRequestUserInfoListener(RequestUserInfoListener listener) {
-        this.requestUserInfoListener = listener;
-    }
 
     private String performRegister() {
         if (requestUserInfoListener == null) {

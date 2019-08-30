@@ -50,7 +50,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
 
     implementation project(':library')
-//    implementation 'com.github.nadileaf:zhaohu-sdk-android:v0.1.0-alpha'
+//    implementation 'com.github.nadileaf:zhaohu-sdk-android:v0.2.0-alpha'
 
     // Core library
     androidTestImplementation 'androidx.test:core:1.2.0'
