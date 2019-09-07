@@ -31,12 +31,17 @@ public class WebviewActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String token = intent.getStringExtra(DraggableFloatingActionButton.TOKEN);
+        String from = intent.getStringExtra(DraggableFloatingActionButton.FROM);
         WebView webView = findViewById(R.id.webview);
         WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);
         settings.setLoadWithOverviewMode(true);
         settings.setUseWideViewPort(true);
-        String url = Uri.parse("https://www.mesoor.com/").buildUpon().appendQueryParameter("token", token).toString();
+        String url = Uri.parse("https://agora.mesoor.com/")
+                .buildUpon()
+                .appendQueryParameter("token", token)
+                .appendQueryParameter("from", from)
+                .toString();
         Log.d("url", url);
         webView.loadUrl(url);
     }

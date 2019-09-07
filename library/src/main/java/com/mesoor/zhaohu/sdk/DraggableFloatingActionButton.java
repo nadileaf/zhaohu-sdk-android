@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -20,12 +21,14 @@ import java.util.Optional;
 
 public class DraggableFloatingActionButton extends FloatingActionButton {
     public static final String TOKEN = "com.mesoor.zhaohu.sdk.TOKEN";
+    public static final String FROM = "com.mesoor.zhaohu.sdk.FROM";
 
     public String PREFERENCE_NAME = "com.mesoor.zhaohu.sdk.PREFERENCES";
     private final static float CLICK_DRAG_TOLERANCE = 10; // Often, there will be a slight, unintentional, drag when the user taps the FAB, so we need to account for this.
     private float downRawX, downRawY;
     private float dX, dY;
     private String token;
+    private String from;
     private Activity activity;
     private CoordinatorLayout.LayoutParams coordinatorLayout;
 
@@ -46,9 +49,11 @@ public class DraggableFloatingActionButton extends FloatingActionButton {
 
     public void initialize(@NonNull Activity activity,
                            @NonNull String token,
+                           @NonNull String from,
                            @NonNull RequestUserInfoListener listener) {
         this.activity = activity;
         this.token = token;
+        this.from = from;
         this.requestUserInfoListener = listener;
     }
 
@@ -182,7 +187,7 @@ public class DraggableFloatingActionButton extends FloatingActionButton {
     }
 
     private void onClick(View view) {
-        if (this.activity == null || this.token == null) {
+        if (this.activity == null || this.token == null || this.from == null) {
             Snackbar.make(view, "Please call the initialize method before using it.", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
         } else if (getAuthorized()) {
@@ -198,8 +203,10 @@ public class DraggableFloatingActionButton extends FloatingActionButton {
             .setMessage("有 HR 对你感兴趣, 允许麦萌共享你的个人信息, 麦萌将为你推荐合适的职位.")
             .setPositiveButton("同意授权我的基本信息给\"麦穗\"", (dialog, which) -> {
                 setAuthorized(true);
-                String infoStr = performRegister();
-                showWebView();
+                AsyncTask.execute(() -> {
+                    String infoStr = performRegister();
+                    this.activity.runOnUiThread(this::showWebView);
+                });
             })
             .setNegativeButton("以后再说", (dialog, which) -> {})
             .show();
@@ -208,6 +215,7 @@ public class DraggableFloatingActionButton extends FloatingActionButton {
     private void showWebView() {
         Intent webview = new Intent(this.activity, WebviewActivity.class);
         webview.putExtra(TOKEN, this.token);
+        webview.putExtra(FROM, this.from);
         this.activity.startActivity(webview);
     }
 

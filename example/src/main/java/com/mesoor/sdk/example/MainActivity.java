@@ -1,10 +1,18 @@
 package com.mesoor.sdk.example;
 
 import android.os.Bundle;
+import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import com.mesoor.zhaohu.sdk.DraggableFloatingActionButton;
 
+import javax.net.ssl.HttpsURLConnection;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -23,11 +31,30 @@ public class MainActivity extends AppCompatActivity {
         DraggableFloatingActionButton zhaohu = findViewById(R.id.zhaohu);
         zhaohu.hide();
 
+        // 模拟网络延迟
         schedulerExecutor.schedule(() -> {
-            String token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c";
-            zhaohu.initialize(this, token, () -> fakeUserInfo);
-            zhaohu.show();
-        }, 3, TimeUnit.SECONDS);
+            String token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjUxNzYiLCJmcm9tIjoidGVzdCIsImlhdCI6MTU2MDgyNTI3NywiZXhwIjoxNjIzODk3MjY1fQ.fw77bPa-Bh3sqW9YpopwEVRXIXByioSxh-elUXca4JI";
+            String from = "test";
+            zhaohu.initialize(this, token, from, this::request);
+            runOnUiThread(() -> {
+                if (!zhaohu.isShown()) zhaohu.show();
+            });
+        }, 1, TimeUnit.SECONDS);
+    }
+
+    private String request() {
+        try {
+            URL url = new URL("https://www.mesoor.com");
+            URLConnection urlConnection = url.openConnection();
+            InputStream in = urlConnection.getInputStream();
+            byte[] buffer = new byte[in.available()];
+            in.read(buffer);
+            Log.d("Fake Request", new String(buffer));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return fakeUserInfo;
     }
 
     private String fakeUserInfo = "{\n" +
