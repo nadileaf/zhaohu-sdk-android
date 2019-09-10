@@ -14,7 +14,6 @@ public class ZhaohuActivity extends com.mesoor.zhaohu.sdk.ZhaohuActivity {
         return request();
     }
 
-
     private String request() {
         try {
             URL url = new URL("https://www.mesoor.com");

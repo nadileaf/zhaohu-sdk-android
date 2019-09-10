@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
         // 模拟网络延迟
         schedulerExecutor.schedule(() -> {
-            String token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjUxNzYiLCJmcm9tIjoidGVzdCIsImlhdCI6MTU2MDgyNTI3NywiZXhwIjoxNjIzODk3MjY1fQ.fw77bPa-Bh3sqW9YpopwEVRXIXByioSxh-elUXca4JI";
+            String token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InJ1YXJ1YXJ1YSIsImZyb20iOiJ0ZXN0IiwiaWF0IjoxNTYwODI1Mjc3LCJleHAiOjE2MjM4OTcyNjV9.fHKbDJtHZJZhq0PI7e9jHsfxCuhEy3Wxf1BIj5egAtY";
             String from = "test";
             zhaohu.initialize(this, token, from, ZhaohuActivity.class);
             runOnUiThread(() -> {
