@@ -1,11 +1,8 @@
 package com.mesoor.zhaohu.sdk;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -16,20 +13,18 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
-import java.util.Objects;
-import java.util.Optional;
-
 public class DraggableFloatingActionButton extends FloatingActionButton {
     public static final String TOKEN = "com.mesoor.zhaohu.sdk.TOKEN";
     public static final String FROM = "com.mesoor.zhaohu.sdk.FROM";
+    public static final String REQUEST = "com.mesoor.zhaohu.sdk.REQUEST";
 
-    public String PREFERENCE_NAME = "com.mesoor.zhaohu.sdk.PREFERENCES";
     private final static float CLICK_DRAG_TOLERANCE = 10; // Often, there will be a slight, unintentional, drag when the user taps the FAB, so we need to account for this.
     private float downRawX, downRawY;
     private float dX, dY;
     private String token;
     private String from;
     private Activity activity;
+    private Class<? extends ZhaohuActivity> webviewActivityClass;
     private CoordinatorLayout.LayoutParams coordinatorLayout;
 
     public DraggableFloatingActionButton(Context context) {
@@ -50,24 +45,16 @@ public class DraggableFloatingActionButton extends FloatingActionButton {
     public void initialize(@NonNull Activity activity,
                            @NonNull String token,
                            @NonNull String from,
-                           @NonNull RequestUserInfoListener listener) {
+                           @NonNull Class<? extends ZhaohuActivity> webviewActivityClass) {
         this.activity = activity;
         this.token = token;
         this.from = from;
-        this.requestUserInfoListener = listener;
+        this.webviewActivityClass = webviewActivityClass;
     }
 
     private void setup() {
         setOnTouchListener(this::onTouch);
         setOnClickListener(this::onClick);
-    }
-
-    public CoordinatorLayout.LayoutParams getCoordinatorLayout() {
-        return coordinatorLayout;
-    }
-
-    public void setCoordinatorLayout(CoordinatorLayout.LayoutParams coordinatorLayout) {
-        this.coordinatorLayout = coordinatorLayout;
     }
 
     private boolean onTouch(View view, MotionEvent motionEvent) {
@@ -176,56 +163,20 @@ public class DraggableFloatingActionButton extends FloatingActionButton {
         }
     }
 
-    private boolean getAuthorized() {
-        SharedPreferences sp = this.activity.getSharedPreferences(this.PREFERENCE_NAME, Context.MODE_PRIVATE);
-        return sp.getBoolean("authorized", false);
-    }
-
-    private void setAuthorized(boolean value) {
-        SharedPreferences sp = this.activity.getSharedPreferences(this.PREFERENCE_NAME, Context.MODE_PRIVATE);
-        sp.edit().putBoolean("authorized", value).apply();
-    }
-
     private void onClick(View view) {
         if (this.activity == null || this.token == null || this.from == null) {
             Snackbar.make(view, "Please call the initialize method before using it.", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
-        } else if (getAuthorized()) {
-           showWebView();
         } else {
-            requestAuthorization();
+            showWebView();
         }
-    }
-
-    private void requestAuthorization() {
-        new AlertDialog.Builder(getContext())
-            .setTitle("FBI WARNING")
-            .setMessage("有 HR 对你感兴趣, 允许麦萌共享你的个人信息, 麦萌将为你推荐合适的职位.")
-            .setPositiveButton("同意授权我的基本信息给\"麦穗\"", (dialog, which) -> {
-                setAuthorized(true);
-                AsyncTask.execute(() -> {
-                    String infoStr = performRegister();
-                    this.activity.runOnUiThread(this::showWebView);
-                });
-            })
-            .setNegativeButton("以后再说", (dialog, which) -> {})
-            .show();
     }
 
     private void showWebView() {
-        Intent webview = new Intent(this.activity, WebviewActivity.class);
+        Intent webview = new Intent(this.activity, webviewActivityClass);
         webview.putExtra(TOKEN, this.token);
         webview.putExtra(FROM, this.from);
         this.activity.startActivity(webview);
-    }
-
-    private RequestUserInfoListener requestUserInfoListener;
-
-    private String performRegister() {
-        if (requestUserInfoListener == null) {
-            throw new NullPointerException("requestUserInfoListener not set!");
-        }
-        return this.requestUserInfoListener.callback();
     }
 }
 
