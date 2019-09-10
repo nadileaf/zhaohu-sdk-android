@@ -3,8 +3,6 @@
           package="com.mesoor.zhaohu.sdk">
     <uses-permission android:name="android.permission.INTERNET"/>
     <application>
-        <activity android:name=".ZhaohuActivity">
-        </activity>
     </application>
 
 </manifest>
