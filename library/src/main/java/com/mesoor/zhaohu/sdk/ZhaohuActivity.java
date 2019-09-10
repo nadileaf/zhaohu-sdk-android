@@ -56,7 +56,7 @@ public abstract class ZhaohuActivity extends AppCompatActivity {
         webView.loadUrl(url);
     }
 
-    public abstract String requestUserInfo();
+    protected abstract String requestUserInfo();
 
     class JsBridge {
         @JavascriptInterface

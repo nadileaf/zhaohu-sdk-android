@@ -10,7 +10,7 @@ import java.net.URLConnection;
 public class ZhaohuActivity extends com.mesoor.zhaohu.sdk.ZhaohuActivity {
 
     @Override
-    public String requestUserInfo() {
+    protected String requestUserInfo() {
         return request();
     }
 
