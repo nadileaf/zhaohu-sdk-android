@@ -3,4 +3,7 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_main2">Main2Activity</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="initialize_zhaohu">Initialize Zhaohu</string>
+    <string name="nadileaf">nadileaf</string>
+    <string name="mesoor">mesoor</string>
 </resources>

@@ -16,13 +16,14 @@ import com.google.android.material.snackbar.Snackbar;
 public class DraggableFloatingActionButton extends FloatingActionButton {
     public static final String TOKEN = "com.mesoor.zhaohu.sdk.TOKEN";
     public static final String FROM = "com.mesoor.zhaohu.sdk.FROM";
-    public static final String REQUEST = "com.mesoor.zhaohu.sdk.REQUEST";
+    public static final String ENV = "com.mesoor.zhaohu.sdk.ENV";
 
     private final static float CLICK_DRAG_TOLERANCE = 10; // Often, there will be a slight, unintentional, drag when the user taps the FAB, so we need to account for this.
     private float downRawX, downRawY;
     private float dX, dY;
     private String token;
     private String from;
+    private String env = "mesoor";
     private Activity activity;
     private Class<? extends ZhaohuActivity> webviewActivityClass;
     private CoordinatorLayout.LayoutParams coordinatorLayout;
@@ -45,10 +46,12 @@ public class DraggableFloatingActionButton extends FloatingActionButton {
     public void initialize(@NonNull Activity activity,
                            @NonNull String token,
                            @NonNull String from,
+                           String env,
                            @NonNull Class<? extends ZhaohuActivity> webviewActivityClass) {
         this.activity = activity;
         this.token = token;
         this.from = from;
+        if (env != null) this.env = env;
         this.webviewActivityClass = webviewActivityClass;
     }
 
@@ -176,6 +179,7 @@ public class DraggableFloatingActionButton extends FloatingActionButton {
         Intent webview = new Intent(this.activity, webviewActivityClass);
         webview.putExtra(TOKEN, this.token);
         webview.putExtra(FROM, this.from);
+        webview.putExtra(ENV, this.env);
         this.activity.startActivity(webview);
     }
 }
