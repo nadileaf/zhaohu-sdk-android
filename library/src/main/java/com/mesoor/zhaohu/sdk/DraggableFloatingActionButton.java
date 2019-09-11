@@ -3,7 +3,6 @@ package com.mesoor.zhaohu.sdk;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.PorterDuff;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -14,9 +13,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 public class DraggableFloatingActionButton extends FloatingActionButton {
-    public static final String TOKEN = "com.mesoor.zhaohu.sdk.TOKEN";
-    public static final String FROM = "com.mesoor.zhaohu.sdk.FROM";
-    public static final String ENV = "com.mesoor.zhaohu.sdk.ENV";
+    static final String TOKEN = "com.mesoor.zhaohu.sdk.TOKEN";
+    static final String FROM = "com.mesoor.zhaohu.sdk.FROM";
+    static final String ENV = "com.mesoor.zhaohu.sdk.ENV";
 
     public enum ZhaohuEnvironmentEnum {
         PROD, DEV

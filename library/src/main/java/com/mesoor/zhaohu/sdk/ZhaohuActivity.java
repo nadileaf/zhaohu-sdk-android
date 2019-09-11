@@ -3,14 +3,12 @@ package com.mesoor.zhaohu.sdk;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Window;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
@@ -90,7 +88,7 @@ public abstract class ZhaohuActivity extends AppCompatActivity {
             scheduler.execute(() -> {
                 String resume = requestUserInfo();
                 try {
-                    JSONObject message = new JSONObject(resume);
+                    new JSONObject(resume);
                     runOnUiThread(() -> {
                         ZhaohuActivity.this.webView.loadUrl("javascript:" + callback + "(" + resume + ")");
                     });
