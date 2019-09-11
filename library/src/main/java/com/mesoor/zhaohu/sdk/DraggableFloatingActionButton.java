@@ -13,17 +13,23 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.Set;
+
 public class DraggableFloatingActionButton extends FloatingActionButton {
     public static final String TOKEN = "com.mesoor.zhaohu.sdk.TOKEN";
     public static final String FROM = "com.mesoor.zhaohu.sdk.FROM";
     public static final String ENV = "com.mesoor.zhaohu.sdk.ENV";
+
+    public enum ZhaohuEnvironmentEnum {
+        PROD, DEV
+    }
 
     private final static float CLICK_DRAG_TOLERANCE = 10; // Often, there will be a slight, unintentional, drag when the user taps the FAB, so we need to account for this.
     private float downRawX, downRawY;
     private float dX, dY;
     private String token;
     private String from;
-    private String env = "mesoor";
+    private ZhaohuEnvironmentEnum env = ZhaohuEnvironmentEnum.PROD;
     private Activity activity;
     private Class<? extends ZhaohuActivity> webviewActivityClass;
     private CoordinatorLayout.LayoutParams coordinatorLayout;
@@ -46,13 +52,15 @@ public class DraggableFloatingActionButton extends FloatingActionButton {
     public void initialize(@NonNull Activity activity,
                            @NonNull String token,
                            @NonNull String from,
-                           String env,
                            @NonNull Class<? extends ZhaohuActivity> webviewActivityClass) {
         this.activity = activity;
         this.token = token;
         this.from = from;
-        if (env != null) this.env = env;
         this.webviewActivityClass = webviewActivityClass;
+    }
+
+    public void setEnv(ZhaohuEnvironmentEnum env) {
+        this.env = env;
     }
 
     private void setup() {
@@ -179,7 +187,7 @@ public class DraggableFloatingActionButton extends FloatingActionButton {
         Intent webview = new Intent(this.activity, webviewActivityClass);
         webview.putExtra(TOKEN, this.token);
         webview.putExtra(FROM, this.from);
-        webview.putExtra(ENV, this.env);
+        webview.putExtra(ENV, this.env == ZhaohuEnvironmentEnum.PROD ? "mesoor" : "nadileaf");
         this.activity.startActivity(webview);
     }
 }

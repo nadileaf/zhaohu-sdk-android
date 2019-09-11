@@ -24,11 +24,15 @@ public class MainActivity extends AppCompatActivity {
         zhaohu.hide();
 
         initializeZhaohuButton.setOnClickListener(view -> {
+            zhaohu.setEnv(
+                    envRadioGroup.getCheckedRadioButtonId() == R.id.mesoorRadioButton
+                    ? DraggableFloatingActionButton.ZhaohuEnvironmentEnum.PROD
+                    : DraggableFloatingActionButton.ZhaohuEnvironmentEnum.DEV
+            );
             zhaohu.initialize(
                     this,
                     tokenEditText.getText().toString(),
                     fromEditText.getText().toString(),
-                    envRadioGroup.getCheckedRadioButtonId() == R.id.mesoorRadioButton ? "mesoor" : "nadileaf",
                     ZhaohuActivity.class
             );
             if (!zhaohu.isShown()) zhaohu.show();
