@@ -62,7 +62,6 @@ public class DraggableFloatingActionButton extends FloatingActionButton {
 
     private void setup() {
         this.setImageResource(R.drawable.mesoor_round_logo);
-//        this.setScaleType(ScaleType.CENTER);
         setOnTouchListener(this::onTouch);
         setOnClickListener(this::onClick);
     }
