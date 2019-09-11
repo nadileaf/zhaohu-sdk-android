@@ -3,17 +3,15 @@ package com.mesoor.zhaohu.sdk;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import androidx.annotation.NonNull;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
-
-import java.util.Set;
 
 public class DraggableFloatingActionButton extends FloatingActionButton {
     public static final String TOKEN = "com.mesoor.zhaohu.sdk.TOKEN";
@@ -32,7 +30,6 @@ public class DraggableFloatingActionButton extends FloatingActionButton {
     private ZhaohuEnvironmentEnum env = ZhaohuEnvironmentEnum.PROD;
     private Activity activity;
     private Class<? extends ZhaohuActivity> webviewActivityClass;
-    private CoordinatorLayout.LayoutParams coordinatorLayout;
 
     public DraggableFloatingActionButton(Context context) {
         super(context);
@@ -64,6 +61,8 @@ public class DraggableFloatingActionButton extends FloatingActionButton {
     }
 
     private void setup() {
+        this.setImageResource(R.drawable.mesoor_round_logo);
+//        this.setScaleType(ScaleType.CENTER);
         setOnTouchListener(this::onTouch);
         setOnClickListener(this::onClick);
     }
@@ -129,7 +128,7 @@ public class DraggableFloatingActionButton extends FloatingActionButton {
 
                 //check if is nearest Y o X
                 if (borderX > borderY) {
-                    if (view.getY() > viewParent2.getHeight() / 2) { //view near Bottom
+                    if ((int)view.getY() > viewParent2.getHeight() / 2) { //view near Bottom
                         finalY = viewParent2.getBottom() - view.getHeight();
                         finalY = Math.min(viewParent2.getHeight() - view.getHeight(), finalY) - fab_margin; // Don't allow the FAB past the bottom of the parent
                     } else {  //view vicina a Top
@@ -143,7 +142,7 @@ public class DraggableFloatingActionButton extends FloatingActionButton {
                     if (viewParent2.getRight() - view.getX() - view.getWidth() < fab_margin)
                         finalX = viewParent2.getRight() - view.getWidth() - fab_margin;
                 } else {  //view near Right
-                    if (view.getX() > viewParent2.getWidth() / 2) {
+                    if ((int)view.getX() > viewParent2.getWidth() / 2) {
                         finalX = viewParent2.getRight() - view.getWidth();
                         finalX = Math.max(0, finalX) - fab_margin; // Don't allow the FAB past the left hand side of the parent
                     } else {  //view near Left
