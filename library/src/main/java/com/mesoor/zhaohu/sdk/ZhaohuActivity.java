@@ -47,14 +47,18 @@ public abstract class ZhaohuActivity extends AppCompatActivity {
         settings.setJavaScriptEnabled(true);
         settings.setLoadWithOverviewMode(true);
         settings.setUseWideViewPort(true);
-        String url = Uri.parse("https://agora." + env + ".com/")
-                .buildUpon()
-                .appendQueryParameter("token", token)
-                .appendQueryParameter("from", from)
-                .appendQueryParameter("platform", "android_sdk")
-                .toString();
+        String url = url(token, from, env);
         Log.d("url", url);
         webView.loadUrl(url);
+    }
+
+    static String url(String token, String from, String env) {
+        return Uri.parse("https://agora." + env + ".com/")
+                    .buildUpon()
+                    .appendQueryParameter("token", token)
+                    .appendQueryParameter("from", from)
+                    .appendQueryParameter("platform", "android_sdk")
+                    .toString();
     }
 
     protected abstract String requestUserInfo();
