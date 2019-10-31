@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity">
+
+    <android.support.design.widget.AppBarLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                app:popupTheme="@style/AppTheme.PopupOverlay"/>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <include layout="@layout/content_main" android:id="@+id/include"/>
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="434dp"
+            android:layout_height="526dp"
+            android:layout_gravity="center_vertical">
+        <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:minLines="5"
+                android:text="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InJ1YXJ1YXJ1YSIsImZyb20iOiJ0ZXN0IiwiaWF0IjoxNTYwODI1Mjc3LCJleHAiOjE2MjM4OTcyNjV9.fHKbDJtHZJZhq0PI7e9jHsfxCuhEy3Wxf1BIj5egAtY"
+                android:ems="10"
+                android:id="@+id/tokenEditText"
+                android:autofillHints="Token"/>
+        <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:text="test"
+                android:ems="10"
+                android:id="@+id/fromEditText"
+                android:autofillHints="From"/>
+        <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/envRadioGroup"
+                android:orientation="horizontal"
+        >
+            <RadioButton
+                    android:text="@string/mesoor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/mesoorRadioButton"
+                    android:layout_weight="1"/>
+            <RadioButton
+                    android:text="@string/nadileaf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/nadileafRadioButton"
+                    android:layout_weight="1"/>
+        </RadioGroup>
+        <Button
+                android:text="@string/initialize_zhaohu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/initializeZhaohuButton"/>
+    </LinearLayout>
+    <com.mesoor.zhaohu.sdk.DraggableFloatingActionButton
+            android:id="@+id/zhaohu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            app:maxImageSize="56dp"
+            app:backgroundTint="@color/transparent"/>
+
+</android.support.constraint.ConstraintLayout>
