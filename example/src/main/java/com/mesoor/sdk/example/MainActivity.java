@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
                     ? DraggableFloatingActionButton.ZhaohuEnvironmentEnum.PROD
                     : DraggableFloatingActionButton.ZhaohuEnvironmentEnum.DEV
             );
+            zhaohu.setDebuggingEnabled(true);
             zhaohu.initialize(
                     this,
                     tokenEditText.getText().toString(),

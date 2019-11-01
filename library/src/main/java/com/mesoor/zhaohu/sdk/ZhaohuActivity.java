@@ -3,6 +3,7 @@ package com.mesoor.zhaohu.sdk;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Window;
@@ -24,7 +25,7 @@ public abstract class ZhaohuActivity extends AppCompatActivity {
 
     private WebView webView;
     private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
-    @SuppressLint("SetJavaScriptEnabled")
+    @SuppressLint({"SetJavaScriptEnabled", "AddJavascriptInterface"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -41,10 +42,15 @@ public abstract class ZhaohuActivity extends AppCompatActivity {
         String token = intent.getStringExtra(DraggableFloatingActionButton.TOKEN);
         String from = intent.getStringExtra(DraggableFloatingActionButton.FROM);
         String env = intent.getStringExtra(DraggableFloatingActionButton.ENV);
+        boolean debug = intent.getBooleanExtra(DraggableFloatingActionButton.DEBUG, false);
         this.webView = findViewById(R.id.webview);
         webView.addJavascriptInterface(new JsBridge(), "bridge");
+        if (debug && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            WebView.setWebContentsDebuggingEnabled(true);
+        }
         WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);
+        settings.setDomStorageEnabled(true);
         settings.setLoadWithOverviewMode(true);
         settings.setUseWideViewPort(true);
         String url = url(token, from, env);

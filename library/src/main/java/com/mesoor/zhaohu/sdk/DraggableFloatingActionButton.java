@@ -16,6 +16,7 @@ public class DraggableFloatingActionButton extends FloatingActionButton {
     static final String TOKEN = "com.mesoor.zhaohu.sdk.TOKEN";
     static final String FROM = "com.mesoor.zhaohu.sdk.FROM";
     static final String ENV = "com.mesoor.zhaohu.sdk.ENV";
+    static final String DEBUG = "com.mesoor.zhaohu.sdk.DEBUG";
 
     public enum ZhaohuEnvironmentEnum {
         PROD, DEV
@@ -26,6 +27,7 @@ public class DraggableFloatingActionButton extends FloatingActionButton {
     private float dX, dY;
     private String token;
     private String from;
+    private boolean debug = false;
     private ZhaohuEnvironmentEnum env = ZhaohuEnvironmentEnum.PROD;
     private Activity activity;
     private Class<? extends ZhaohuActivity> webviewActivityClass;
@@ -53,6 +55,10 @@ public class DraggableFloatingActionButton extends FloatingActionButton {
         this.token = token;
         this.from = from;
         this.webviewActivityClass = webviewActivityClass;
+    }
+
+    public void setDebuggingEnabled(boolean enabled) {
+        this.debug = enabled;
     }
 
     public void setEnv(ZhaohuEnvironmentEnum env) {
@@ -185,6 +191,7 @@ public class DraggableFloatingActionButton extends FloatingActionButton {
         webview.putExtra(TOKEN, this.token);
         webview.putExtra(FROM, this.from);
         webview.putExtra(ENV, this.env == ZhaohuEnvironmentEnum.PROD ? "mesoor" : "nadileaf");
+        webview.putExtra(DEBUG, this.debug);
         this.activity.startActivity(webview);
     }
 }
